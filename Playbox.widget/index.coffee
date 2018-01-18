@@ -5,7 +5,7 @@
 options =
   # Choose where the widget should sit on your screen.
   verticalPosition    : "bottom"        # top | bottom | center
-  horizontalPosition    : "left"        # left | right | center
+  horizontalPosition    : "right"        # left | right | center
 
   # Choose widget size.
   widgetVariant: "large"                # large | medium | small
@@ -14,12 +14,12 @@ options =
   widgetTheme: "dark"                   # dark | light
 
   # Song metadata inside or outside? Applies to large and medium variants only.
-  metaPosition: "inside"                # inside | outside
+  metaPosition: "outside"                # inside | outside
 
   # Stick the widget in the corner? Set to *true* if you're using it with Sidebar widget, set to *false* if you'd like to give it some breathing room and a drop shadow.
   stickInCorner: false                  # true | false
 
-command: "osascript 'Playbox.widget/lib/Get Current Track.applescript'"
+command: "/usr/local/bin/node 'Playbox.widget/lib/GetCurrentTrack.js'"
 refreshFrequency: '1s'
 
 style: """
@@ -82,7 +82,7 @@ style: """
   position absolute
   transform-style preserve-3d
   -webkit-transform translate3d(0px, 0px, 0px)
-  mainDimension = 176px
+  mainDimension = 336px
   width auto
   min-width 200px
   max-width mainDimension
@@ -239,18 +239,18 @@ afterRender: (domEl) ->
   if @options.horizontalPosition is 'center'
     div.css('left', (screen.width - div.width())/2)
 
-  if @options.metaPosition is 'inside' and @options.widgetVariant isnt 'small'
-    meta.delay(3000).fadeOut(500)
+  # if @options.metaPosition is 'inside' and @options.widgetVariant isnt 'small'
+  #   meta.delay(3000).fadeOut(500)
 
-    div.click(
-      =>
-        meta.stop(true,false).fadeIn(250).delay(3000).fadeOut(500)
-        if @options.stickInCorner is false
-          div.stop(true,true).animate({zoom: '0.99', boxShadow: '0 0 2px rgba(0,0,0,1.0)'}, 200, 'swing')
-          div.stop(true,true).animate({zoom: '1.0', boxShadow: '0 20px 40px 0px rgba(0,0,0,0.6)'}, 300, 'swing')
-          # div.find('.wrapper').stop(true,true).addClass('pushed')
-          # div.find('.wrapper').stop(true,true).removeClass('pushed')
-    )
+  #   div.click(
+  #     =>
+  #       meta.stop(true,false).fadeIn(250).delay(3000).fadeOut(500)
+  #       if @options.stickInCorner is false
+  #         div.stop(true,true).animate({zoom: '0.99', boxShadow: '0 0 2px rgba(0,0,0,1.0)'}, 200, 'swing')
+  #         div.stop(true,true).animate({zoom: '1.0', boxShadow: '0 20px 40px 0px rgba(0,0,0,0.6)'}, 300, 'swing')
+  #         # div.find('.wrapper').stop(true,true).addClass('pushed')
+  #         # div.find('.wrapper').stop(true,true).removeClass('pushed')
+  #   )
 
 # Update the rendered output.
 update: (output, domEl) ->
@@ -261,15 +261,14 @@ update: (output, domEl) ->
   if !output
     div.animate({opacity: 0}, 250, 'swing').hide(1)
   else
-    values = output.slice(0,-1).split(" @ ")
-    div.find('.artist').html(values[0])
-    div.find('.song').html(values[1])
-    div.find('.album').html(values[2])
-    tDuration = values[3]
-    tPosition = values[4]
-    tArtwork = values[5]
-    songChanged = values[6]
-    isLoved = values[7]
+    value = JSON.parse(output)
+    div.find('.artist').html(value.song.artist)
+    div.find('.song').html(value.song.title)
+    div.find('.album').html(value.song.album)
+    tDuration = value.time.total
+    tPosition = value.time.current
+    tArtwork = value.song.albumArt
+    isLoved = value.rating.liked
     currArt = "/" + div.find('.art').css('background-image').split('/').slice(-3).join().replace(/\,/g, '/').slice(0,-1)
     tWidth = div.width()
     tCurrent = (tPosition / tDuration) * tWidth
@@ -305,10 +304,7 @@ update: (output, domEl) ->
       artwork = div.find('.art')
       artwork.css('background-image', 'url(/Playbox.widget/lib/default.png)')
 
-    if songChanged is 'true' and @options.metaPosition is 'inside' and @options.widgetVariant isnt 'small'
-      div.find('.text').fadeIn(250).delay(3000).fadeOut(500)
-
-    if isLoved is 'true'
+    if isLoved
       div.find('.heart').show()
     else
       div.find('.heart').hide()
