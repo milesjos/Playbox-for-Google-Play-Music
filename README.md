@@ -40,4 +40,4 @@ Here's how you can set all the widget's options. Open `index.coffee` and look at
   stickInCorner: false                  # true | false
 ```
 
-## [Download Playbox for Google Play](https://github.com/milesjos/Playbox-for-Google-Play-Music/raw/master/Playbox-for-Google-Play-Music.zip)
+## [Download Playbox for Google Play](https://github.com/milesjos/Playbox-for-Google-Play-Music/archive/master.zip)
