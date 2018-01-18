@@ -1,6 +1,6 @@
 # Playbox for [Übersicht](http://tracesof.net/uebersicht/)
 
-This widget shows currently played song in either iTunes or Spotify. It has a spiffy progress bar, shows pretty artwork (external dependency: pretty artwork) and has a ton of customization options.
+This widget shows currently played song in [Google Play Music Desktop Player](https://www.googleplaymusicdesktopplayer.com/). It has a spiffy progress bar, shows pretty artwork (external dependency: pretty artwork) and has a ton of customization options.
 
 ## [Download Playbox](https://github.com/Pe8er/Playbox.widget/raw/master/Playbox.widget.zip)
 
@@ -8,16 +8,12 @@ This widget shows currently played song in either iTunes or Spotify. It has a sp
 
 <img src="https://github.com/Pe8er/Playbox.widget/blob/master/screenshot.jpg" width="516" height="320">
 
-- Supports both Spotify and iTunes.
-- Shows artwork (courtesy of [last.fm](http://www.last.fm) or local artwork for iTunes songs).
-- Song progress bar.
+- Supports [Google Play Music Desktop Player](https://www.googleplaymusicdesktopplayer.com/).
 - Three size variants.
 - 🔥 Dark and light themes.
 - 🔥 Position song metadata inside or outside the artwork.
-- 🔥 If song meta is inside the artwork, it fades out automatically. Click the artwork to show it again.
 - Easy way to toggle the widget's visibility.
 - Easy way to position the widget on the screen.
-- Spiffy fade animations all over the place.
 
 # Options
 
@@ -44,6 +40,4 @@ Here's how you can set all the widget's options. Open `index.coffee` and look at
   stickInCorner: false                  # true | false
 ```
 
-## [Download Playbox](https://github.com/Pe8er/Playbox.widget/raw/master/Playbox.widget.zip)
-
-[See my other widgets &rarr;](https://github.com/Pe8er/Ubersicht-Widgets)
+## [Download Playbox for Google Play](https://github.com/milesjos/Playbox-for-Google-Play-Music/raw/master/Playbox-for-Google-Play-Music.zip)
